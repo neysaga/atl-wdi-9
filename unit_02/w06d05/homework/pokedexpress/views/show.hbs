@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pokemon Wiki Show</title>
+<div>
+<img src="{{pokemon.img}}">
+	<ul>
+		<h1>{{pokemon.name}}</h1>
+		<li>{{pokemon.type}}</li>
+		<li>
+			{{#each pokemon.stats}}
+				{{@key}}: {{this}}
+			{{/each}}
+		</li>
+		<li>{{pokemon.moves}}</li>
+		<li>{{pokemon.damages}}</li>
+		<li>{{pokemon.misc}}</li>
+	</ul>
+</div>
+</head>
+<body>
+
+</body>
+</html>

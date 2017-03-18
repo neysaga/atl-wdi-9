@@ -15,7 +15,8 @@ module.exports = [{
       speed: "45"
     },
     moves: {
-      level: [{
+      level: [
+      {
         learnedat: "",
         name: "tackle",
         gen: "V"
@@ -72,6 +73,7 @@ module.exports = [{
         name: "seed bomb",
         gen: "V"
       }],
+      
       tmhm: [{
         learnedat: "tm06",
         name: "toxic",

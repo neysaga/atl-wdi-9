@@ -1,0 +1,13 @@
+<div class="pokemonList">
+
+<ul>
+	{{#each pokemon}}
+		<a href="/pokemon/{{@index}}">
+			<li>
+			{{name}}
+			<img src="{{img}}">
+			</li>
+		</a>
+	{{/each}}
+</ul>
+</div>

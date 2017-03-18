@@ -2,17 +2,31 @@
 // REQUIREMENTS
 //***************************
 // Set up your express dependency here:
-
+var express = require('express');
+var router = express.Router();
+var pokemon = require('../models/poke_array.js');
 // Set express Router to a variable called router:
 
 // Let's export this router file at the bottom of the page:
 // (Scroll to bottom to Exports)
+router.get('/', function(req, res) {
+	res.render('index.hbs', {
+		pokemon: pokemon
+	});
+});
+
+router.get('/:id', function(req, res) {
+	res.render('show.hbs', {
+		pokemon: pokemon[req.params.id]
+	});
+});
+
 
 // Require the poke_array.js file here from models.
 // Save it to a variable called data:
 
 
-
+module.exports = router;
 
 //***************************
 // READ
