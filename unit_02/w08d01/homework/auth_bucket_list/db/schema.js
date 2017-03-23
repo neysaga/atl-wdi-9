@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 mongoose.Promise = global.Promise;
 
+
 //add ListSchema here
 //your code
 
@@ -10,7 +11,6 @@ var UserSchema = new Schema({
   username: String,
   email: String,
   password_digest: String,
-  list: [ListSchema],
   created_at: Date,
   updated_at: Date
 });
