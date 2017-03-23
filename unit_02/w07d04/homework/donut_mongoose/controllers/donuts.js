@@ -1,3 +1,8 @@
+var express = require('express');
+var router = express.Router();
+
+var mongoose = require("mongoose");
+var Donut = require("../models/products.js");
 //======================
 // REQUIREMENTS
 //======================
@@ -8,7 +13,16 @@
 // INDEX
 //======================
 // Create a GET index route "/" that sends all donuts to index.hbs
-
+router.get('/', function(req, res){
+  User.find({})
+    .exec(function(err, users){
+      if (err) { console.log(err); }
+      console.log(users);
+      res.render('users/index', {
+        users: users
+      });
+    });
+});
 
 
 //======================
@@ -62,3 +76,4 @@
 // EXPORTS
 //======================
 // export router with module.exports
+module.exports: router;
