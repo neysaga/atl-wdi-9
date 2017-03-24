@@ -13,6 +13,7 @@ function loginUser(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
 
+
   User.findOne({ email: email })
   .then(function(foundUser){
     if (foundUser == null) {
@@ -27,6 +28,15 @@ function loginUser(req, res, next) {
     res.json({status: 500, data: err});
   });
 }
+function authorize(req, res, next) {
+  var currentUser = req.session.currentUser
+
+  if (currentUser._id || !currentUser !== req.params.id ) {
+    res.send({status: 401})
+  } else {
+    next()
+  }
+};
 
 //create a function called "authorized" that checks if the CurrentUser's id matches the id in params
 //your code here
@@ -35,5 +45,8 @@ function loginUser(req, res, next) {
 
 module.exports = {
   createSecure: createSecure,
-  loginUser: loginUser
+  loginUser: loginUser,
+  authorize: authorize
 };
+
+

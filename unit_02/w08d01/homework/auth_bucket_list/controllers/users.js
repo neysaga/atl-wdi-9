@@ -14,6 +14,15 @@ router.get('/', function(req, res) {
   });
 });
 
+router.get('/:id', function(req, res) {
+  User.findById(req.params.id)
+  .exec(function(err, user) {
+    if (err) console.log(err);
+    console.log(user);
+    // res.render('user/show.hbs', { user: user } );
+    res.render('users/show.hbs', { user } );
+  });
+})
 //SIGN UP: create a GET "/signup" that simply renders the signup page
 router.get('/signup', function(req, res){
   res.render('users/signup.hbs');
