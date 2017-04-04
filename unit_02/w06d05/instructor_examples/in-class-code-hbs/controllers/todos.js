@@ -4,7 +4,6 @@ var data = require('../data.js');
 
 /* INDEX TODOS */
 router.get('/', function(req,res) {
-
   res.render('todos/index', {
     todos: data.seededTodos
   });
@@ -52,13 +51,16 @@ router.put('/:id', function(req, res) {
   todoToEdit.urgent = req.body.urgent;
 
   res.redirect('/todos');
-})
+});
 
 router.delete('/:id', function(req, res) {
   data.seededTodos.splice(req.params.id, 1);
 
   res.redirect('/todos');
-})
+});
 
 
 module.exports = router;
+
+
+

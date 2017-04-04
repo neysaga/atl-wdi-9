@@ -13,11 +13,12 @@
     <section ng-controller="PresidentsController as presidents">
       <h1>The Presidents of the United States of America</h1>
 
-      <ul id="presidents">
-        <li ng-repeat="president in presidents.all">
-          <strong>{{president.name}}</strong> <em>({{president.start}} - {{president.end}})</em>
-        </li>
-      </ul>
+            <ul id="presidents">
+                <li ng-repeat="president in presidents.all">
+                    <strong>{{president.name}}</strong> <em>({{president.start}} - {{president.end}})</em>
+                    <button ng-clicik="presidents.deletePresident(president)">Delete</button>
+                </li>
+            </ul>
 
       <form class="add-president" ng-submit='presidents.addPresident()'>
         <div>

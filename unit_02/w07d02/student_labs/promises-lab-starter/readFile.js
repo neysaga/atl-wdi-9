@@ -20,3 +20,28 @@ fs.readFile(inFile, { encoding: 'utf8' }, function(error, content) {
     console.log('Hello, ' + line + '!');
   });
 });
+
+
+let readTheFilePromise = new Promise(function(resolve, reject) {
+  fs.readFile(inFile, { encoding:'utf8'}, function(error, content) {
+    resolve(content);
+    //reject("line 28 error ", error);
+  });
+});
+readTheFilePromise.then(function(result){
+  return lines;
+})
+.then(function(lines){
+  lines.pop();
+  return lines;
+})
+.then(function(lines){
+  lines.forEach(function(line){
+    console.log('Hello, ' + line + '!');
+  });
+
+})
+.catch(function(error){
+  console.log("an error occured line 49", error);
+});
+

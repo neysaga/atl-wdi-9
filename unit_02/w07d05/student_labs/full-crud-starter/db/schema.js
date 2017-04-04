@@ -34,3 +34,4 @@ module.exports = {
   User: UserModel,
   Item: ItemModel
 };
+Contact GitHub API Training Shop Blog About

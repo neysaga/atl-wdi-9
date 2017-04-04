@@ -1,7 +1,7 @@
 {
   "name": "clock_hand_angle",
   "version": "1.0.0",
-  "description": "",
+  "description": "![ga](http://mobbook.generalassemb.ly/ga_cog.png)",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -11,5 +11,8 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.2.0"
+  },
+  "directories": {
+    "test": "test"
   }
 }
