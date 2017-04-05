@@ -29,13 +29,12 @@
         <label for="newCriminal-name">Name:</label>
         <input type="text" id="newCriminal-name" ng-model="criminals.newCriminal.name" placeholder="Prof. Moriarty" required />
         <div class="error-messages" ng-messages="myForm.newCriminal-name.$error">
-        <div ng-message="required">Name is required</div>
+        
       </div>
       <div>
         <label for="newCriminal-location">Location:</label>
-        <input type="text" id="newCriminal-location" ng-model="criminals.newCriminal.location" placeholder="Reichenbach Falls, CH" required />
+        <input type="text" id="newCriminal-location" ng-model="criminals.newCriminal.location" placeholder="Reichenbach Falls, CH" required ng-pattern="/^([a-z]| )+[^ ], [a-z]{2}$/i" />
         <div class="error-messages" ng-messages="myForm.newCriminal-location.$error">
-        <div ng-message="required">location is required</div>
       </div>
       </div>
       <div>
