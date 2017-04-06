@@ -10,6 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.2"
+    "angular": "^1.6.4",
+    "express": "^4.15.2",
+    "glob": "^7.1.1"
+  },
+  "devDependencies": {
+    "webpack": "^2.3.3"
   }
 }
