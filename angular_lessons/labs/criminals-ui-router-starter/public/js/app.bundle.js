@@ -63,11 +63,86 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+CriminalsAboutController.$inject = [];
+
+function CriminalsAboutController() {
+	const vm = this;
+}
+
+module.exports = CriminalsAboutController;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+CriminalsNewController.$inject = ['$state', 'CriminalsService'];
+
+function CriminalsNewController($state, CriminalsService) {
+	const vm = this;
+
+	vm.newCriminal = {};
+	vm.createCriminal = createCriminal;
+
+	activate();
+
+	function activate() {}
+
+	function loadAllCriminals() {
+		CriminalsService.loadAll();
+	}
+
+	function createCriminal() {
+		CriminalsService.addCriminal(vm.newCriminal).then(function (response) {
+			vm.newCriminal = {};
+			loadAllCriminals();
+			$state.go('criminals');
+		});
+	}
+}
+
+module.exports = CriminalsNewController;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+CriminalsShowController.$inject = ['$stateParams', 'CriminalsService', '$state'];
+
+function CriminalsShowController($stateParams, CriminalsService, $state) {
+	const vm = this;
+
+	vm.current = {};
+
+	activate();
+
+	function activate() {
+		loadCurrentCriminal();
+	}
+
+	function loadCurrentCriminal() {
+		console.log($stateParams);
+
+		CriminalsService.loadCurrent($stateParams.criminalId).then(function resolve(response) {
+			console.log(response.data.criminal);
+			vm.current = response.data.criminal;
+			$state.go('criminal', {
+				criminalId: vm.current._id
+			});
+		});
+	}
+}
+
+module.exports = CriminalsShowController;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 CriminalsController.$inject = ['CriminalsService'];
@@ -98,7 +173,7 @@ function CriminalsController(CriminalsService) {
 module.exports = CriminalsController;
 
 /***/ }),
-/* 1 */
+/* 4 */
 /***/ (function(module, exports) {
 
 HomeController.$inject = [];
@@ -110,11 +185,11 @@ function HomeController() {
 module.exports = HomeController;
 
 /***/ }),
-/* 2 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const angular = __webpack_require__(8);
-__webpack_require__(6);
+const angular = __webpack_require__(14);
+__webpack_require__(12);
 
 angular.module('criminals', ['ui.router']).config(uiRouterSetup);
 
@@ -125,20 +200,74 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
 		template: '<h1>Home</h1>'
 	}).state('about', {
 		url: '/about',
-		template: '<h1>About</h1>'
+		template: '<about></about>'
 	}).state('criminals', {
-		url: '/',
-		template: '<h1>Criminals</h1>'
+		url: '/criminals',
+		template: '<criminals></criminals>'
+	}).state('criminal', {
+		url: '/criminals/:criminalId',
+		template: '<criminals-show></criminals-show>'
+	}).state('new', {
+		url: '/new',
+		template: '<criminals-new></criminals-new>'
 	});
+	// .state('criminal', {
+	// 	url: '/criminals/:newcriminal',
+	// 	template: '<criminals-new></criminals-new>'
+	// });
+
+
 	$urlRouterProvider.otherwise('/');
 }
 
 /***/ }),
-/* 3 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(0);
-const template = __webpack_require__(9);
+const template = __webpack_require__(15);
+
+const CriminalsAboutComponent = {
+	controller: controller,
+	template: template
+};
+
+angular.module('criminals').component('about', CriminalsAboutComponent);
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const controller = __webpack_require__(1);
+const template = __webpack_require__(16);
+
+const CriminalsNewComponent = {
+	controller: controller,
+	template: template
+};
+
+angular.module('criminals').component('criminalsNew', CriminalsNewComponent);
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const controller = __webpack_require__(2);
+const template = __webpack_require__(17);
+
+const CriminalsShowComponent = {
+	controller: controller,
+	template: template
+};
+
+angular.module('criminals').component('criminalsShow', CriminalsShowComponent);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const controller = __webpack_require__(3);
+const template = __webpack_require__(18);
 
 const CriminalsComponent = {
 	controller: controller,
@@ -148,11 +277,11 @@ const CriminalsComponent = {
 angular.module('criminals').component('criminals', CriminalsComponent);
 
 /***/ }),
-/* 4 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(1);
-const template = __webpack_require__(10);
+const controller = __webpack_require__(4);
+const template = __webpack_require__(19);
 
 const HomeComponent = {
 	controller: controller,
@@ -162,7 +291,7 @@ const HomeComponent = {
 angular.module('criminals').component('home', HomeComponent);
 
 /***/ }),
-/* 5 */
+/* 11 */
 /***/ (function(module, exports) {
 
 angular.module('criminals').service('CriminalsService', CriminalsService);
@@ -174,15 +303,26 @@ function CriminalsService($http) {
 
 	// WHAT THIS SERVICE DOES / HAS AVAILABLE TO CALL
 	self.loadAll = loadAll;
+	self.loadCurrent = loadCurrent;
+	self.addCriminal = addCriminal;
 
 	// HOW IT DOES STUFF
 	function loadAll() {
 		return $http.get('/api/criminals');
 	}
+
+	function loadCurrent(id) {
+
+		return $http.get('/api/criminals/' + id);
+	}
+
+	function addCriminal(criminal) {
+		return $http.post('/api/criminals', criminal);
+	}
 }
 
 /***/ }),
-/* 6 */
+/* 12 */
 /***/ (function(module, exports) {
 
 /**
@@ -4871,7 +5011,7 @@ angular.module('ui.router.state')
 })(window, window.angular);
 
 /***/ }),
-/* 7 */
+/* 13 */
 /***/ (function(module, exports) {
 
 /**
@@ -38248,35 +38388,59 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 8 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(7);
+__webpack_require__(13);
 module.exports = angular;
 
 
 /***/ }),
-/* 9 */
+/* 15 */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"criminals\">\n\t<li ng-show=\"$ctrl.loading\">\n\t\t<strong>Loading...</strong>\n\t</li>\n\n  <li ng-hide=\"$ctrl.loading\" ng-repeat=\"criminal in $ctrl.criminals\">\n    <strong>{{criminal.name}}</strong>\n\n\t\t<!-- Reference for Gerry -->\n    <!-- <em>{{criminal.crime}}</em> -->\n    \n    <span ng-if=\"criminal.status\" class='status {{criminal.status | lowercase }}'>{{criminal.status | uppercase}}</span>\n\n    <a>Click to see their crime (in users#show)</a>\n  </li>\n</ul>\n";
+module.exports = "<div class=\"about\">\n<h1>About the Criminals</h1>\n<h3>Bad boy, bad boy..</h3>\n<h3>whatcha gonna do? whatcha gonna do when they come for you?</h3>\n</div>";
 
 /***/ }),
-/* 10 */
+/* 16 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"new\">\n\t<h1>Add a new Criminal</h1>\n\t<div>\n\t\t<form ng-submit=\"$ctrl.createCriminal()\" id=\"newCriminal\">\n\t\t\t<div>\n\t\t\t\t<label for=\"newCriminal-name\">Name:</label>\n\t\t\t\t<input type=\"text\" id=\"newCriminal-name\" ng-model=\"$ctrl.newCriminal.name\" placeholder=\"donald trump\" />\n\t\t\t</div>\n\t\t\t<div>\n\t\t\t\t<label for=\"newCriminal-location\">Location:</label>\n\t\t\t\t<input type=\"text\" id=\"newCriminal-location\" ng-model=\"$ctrl.newCriminal.crime\" placeholder=\"the pits of hell\" />\n\t\t\t</div>\n\t\t\t<div>\n\t\t\t\t <input type=\"submit\"  value=\"Add Criminal\" /> \n\t\t\t</div>\n\t\t</form>\n\t</div>\n</div>\n";
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = "<div>\n\tName: {{ $ctrl.current.name }}\n\tCrime: {{$ctrl.current.crime}}\n</div>\n";
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+module.exports = "<ul class=\"criminals\">\n\t<li ng-show=\"$ctrl.loading\">\n\t\t<strong>Loading...</strong>\n\t</li>\n\n  <li ng-hide=\"$ctrl.loading\" ng-repeat=\"criminal in $ctrl.criminals\">\n    <strong>{{criminal.name}}</strong>\n\n\t\t<!-- Reference for Gerry -->\n    <!-- <em>{{criminal.crime}}</em> -->\n    \n    <span ng-if=\"criminal.status\" class='status {{criminal.status | lowercase }}'>{{criminal.status | uppercase}}</span>\n\n    <a ui-sref=\"criminal({criminalId: criminal._id})\">Click to see their crime (in users#show)</a>\n  </li>\n</ul>\n";
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"Home\">\n<h1>Home</h1>\n<h2>Antoher</h2>\n</div>";
 
 /***/ }),
-/* 11 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(2);
-__webpack_require__(3);
+__webpack_require__(5);
+__webpack_require__(6);
 __webpack_require__(0);
-__webpack_require__(4);
+__webpack_require__(7);
 __webpack_require__(1);
-module.exports = __webpack_require__(5);
+__webpack_require__(8);
+__webpack_require__(2);
+__webpack_require__(9);
+__webpack_require__(3);
+__webpack_require__(10);
+__webpack_require__(4);
+module.exports = __webpack_require__(11);
 
 
 /***/ })

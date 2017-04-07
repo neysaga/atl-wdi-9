@@ -14,11 +14,25 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
 		})
 		.state('about', {
 			url: '/about',
-			template: '<h1>About</h1>'
+			template: '<about></about>'
 		})
 		.state('criminals', {
-			url: '/',
-			template: '<h1>Criminals</h1>'
+			url: '/criminals',
+			template: '<criminals></criminals>'
 		})
+		.state('criminal', {
+			url: '/criminals/:criminalId',
+			template: '<criminals-show></criminals-show>'
+		})
+		.state('new', {
+			url: '/new',
+			template: '<criminals-new></criminals-new>'
+		});
+		// .state('criminal', {
+		// 	url: '/criminals/:newcriminal',
+		// 	template: '<criminals-new></criminals-new>'
+		// });
+
+
 	$urlRouterProvider.otherwise('/');
 }

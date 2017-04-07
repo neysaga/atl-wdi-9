@@ -11,6 +11,6 @@
     
     <span ng-if="criminal.status" class='status {{criminal.status | lowercase }}'>{{criminal.status | uppercase}}</span>
 
-    <a>Click to see their crime (in users#show)</a>
+    <a ui-sref="criminal({criminalId: criminal._id})">Click to see their crime (in users#show)</a>
   </li>
 </ul>
