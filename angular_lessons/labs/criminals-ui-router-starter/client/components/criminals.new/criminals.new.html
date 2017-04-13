@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="new">
 	<h1>Add a new Criminal</h1>
 	<div>
@@ -15,4 +16,16 @@
 			</div>
 		</form>
 	</div>
+=======
+<div>
+	<form ng-submit="$ctrl.createCriminal()">
+		<label for="name">Name:</label>
+		<input id="name" type="text" ng-model="$ctrl.newCriminal.name" />
+
+		<label for="name">Crime:</label>
+		<input id="crime" type="text" ng-model="$ctrl.newCriminal.crime" />
+
+		<button type="submit">Create</button>
+	</form>
+>>>>>>> 64bdf58ad785d374ccb2a68cf6448fd5d3ccd61a
 </div>

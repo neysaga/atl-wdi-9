@@ -1,4 +1,4 @@
--- BASIC QUERIES
+ -- BASIC QUERIES
 -- Unless otherwise stated, all queries should return all columns
 
 -- Get all information about all authors
