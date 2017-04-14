@@ -19,5 +19,5 @@ use case and how it would relate to the other two.
 - SELECT * FROM companies;
 - SELECT * FROM companies, users, apps;
 - SELECT name FROM companies JOIN users ON user_id;
-- UPDATE users SET name = 'Felicia', 'Neysa' WHERE name = 'Fifi', 'Ney';
+- UPDATE users SET name = 'Felicia';
 - UPDATE companies SET name = 'Materialize', WHERE name = 'material';
